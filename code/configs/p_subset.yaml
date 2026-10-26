@@ -1,0 +1,36 @@
+core4x1:
+  features:
+  - TI
+  - N2
+  - Ri_g
+  - tke
+  lags:
+  - '@0'
+  added: 4
+  total: 48
+  reason: development missingness low + category diversity (turbulence TI/tke + stratification
+    N2 + ratio Ri_g); minimal-dim primary
+top6x2:
+  features:
+  - TI
+  - N2
+  - Ri_g
+  - Ri_f
+  - tke
+  - u_star_norm
+  lags:
+  - '@0'
+  - '@-1'
+  added: 12
+  total: 56
+  reason: core4 + flux Ri_f + surface u_star_norm with 2 lags; secondary reference
+full24:
+  features: all12
+  lags:
+  - '@0'
+  - '@-1'
+  added: 24
+  total: 68
+  reason: v1.0 full bundle carried as secondary (direct comparability)
+status: FROZEN-P1
+frozen_at_utc: '2026-10-09T11:03:16+00:00'

@@ -1,0 +1,14 @@
+horizon,model,rmse,mae,source
+10min,persistence,0.737,0.531,Table1
+10min,BCA,0.726,0.528,Table1
+10min,ARIMA-RF_full,0.714,0.52,Table1
+10min,ARIMA-RF_noT,0.712,0.518,Table1
+1h,persistence,1.165,0.884,Table1
+1h,BCA,1.132,0.863,Table1
+1h,ARIMA-RF_full,1.092,0.83,Table1
+1h,ARIMA-RF_noT,1.071,0.813,Table1
+3h,persistence,1.676,1.315,Table1
+3h,BCA,1.575,1.24,Table1
+3h,ARIMA-RF_full,1.395,1.1,Table1
+3h,ARIMA-RF_noT,1.379,1.083,Table1
+1h,ARIMA-RF_R2_0.84_claim,,,abstract_R2=0.84

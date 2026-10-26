@@ -1,0 +1,2 @@
+bundle,dform,cond,detect_snr0.5,n_valid_snr0.5,pr_snr0.5,ps_snr0.5,detect_snr1.0,n_valid_snr1.0,pr_snr1.0,ps_snr1.0,false_positive,n_valid_neg
+core4x1,quad,m10,0.41,100,0.61,0.51,0.71,100,0.83,0.78,0.01,100

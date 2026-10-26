@@ -1,0 +1,15 @@
+{
+  "run_id": "2026-10-12T132705+0000_p6fail",
+  "protocol_hash": "381b0422f96b7c6eda3270d843644d707701c8215bf9c061e575e87b250e952c",
+  "template": "calibration/audit failure: WITHHELD",
+  "decision_ja": "帰属測定系または実装監査が不合格であり、実データの帰属判定を保留した。",
+  "primary_conditions": {
+    "P_minus_R": null,
+    "P_minus_S": null,
+    "rank_vs_sham": null,
+    "preservation_destruction": null,
+    "calibration_gate": false
+  },
+  "primary_fit_performed": false,
+  "reason": "semi-synthetic gate FAIL on 2700/2700 valid reps (core4x1, R+Xp fix, 100-sham median, 3 DGPs): joint detection SNR0.5 0.09-0.41, SNR1.0 0.11-0.73 (bar 0.80 each); FP<=0.01 (bar 0.075). Confirm interval stays sealed; no primary fit."
+}

@@ -1,0 +1,27 @@
+# macOS / editor
+.DS_Store
+
+# python
+**/__pycache__/
+*.py[cod]
+.venv/
+.ruff_cache/
+.pytest_cache/
+
+# user-run artifacts (the release ships results under results/, not these)
+code/data/*
+!code/data/README.md
+code/runs/
+code/logs/
+code/audit/
+code/tables/
+code/reports/
+code/figures/
+code/delivery/
+code/checkpoints/
+code/manifests/raw_files.jsonl
+
+# never commit the observation data anywhere
+*.nc
+*.tar
+data/raw/

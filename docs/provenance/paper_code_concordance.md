@@ -1,0 +1,17 @@
+# Paper vs code concordance (P2 audit)
+Sample code is reference only (commit 9420b71561d9d51c6665cab918371cd16fa074dd); mismatch alone does not prove a paper error.
+
+| item | paper | code | verdict | evidence |
+|---|---|---|---|---|
+| data_period | 2017-03-10 to 2017-06-16 | pre-supplied CSV (period not enforced in sample) | PAPER_ONLY | paper.xml Sec.2 + sampleCode Data paths |
+| tower_height_vars | northern-ridge 100m tower; 20/100m sensors | Vars100m/Vars assume 20/100m cols (tower ID not checked) | MATCH | paper.xml Sec.2 + sampleFuncs Vars100m/Vars; P1 tower_decision tse13 |
+| aggregation_alignment | 10min/1h/3h windows at 5min moving average | 2 lags + n_skip comment (2/12/36); movingIndices[:-1] | CONFLICT | paper.xml Sec.2 + sampleFuncs data_Func; P2 R0 vs R1 separated |
+| arima_fit_forecast_update | ARIMA(2,0,1) fit/forecast described; update cadence UNSPECIFIED | absent: reads arima error/preds cols; no generator | CODE_ONLY | paper.xml Sec.3.1 + sampleFuncs Vars100m cols; P2 single in-sample fit (documented default) |
+| missing_imputation | variance-ratio MCP + linear interp + Gaussian noise | drop-last-row only; no MCP/interp in sample | CONFLICT | paper.xml Sec.2 + sampleFuncs Vars |
+| split_stratification | stratified 10-fold CV (strata UNSPECIFIED) | random 75/25 split random_state=1 (x2) | CONFLICT | paper.xml Sec.2 + sampleCode tts lines; P2 target-decile default |
+| lag_horizon | previous two time steps; 10min/1h/3h horizons | 2 lags via inputIndices; horizon via n_skip comment | MATCH | paper.xml Sec.3.2 + sampleCode n_steps/n_skip |
+| rf_config | 1000 trees single-var / 1500 combo; min_samples_split=100 | 1000/0.7/100 + oob; no 1500 branch | CONFLICT | paper.xml Sec.3.2 + sampleCode RandomForestRegressor; P2 R0=1000/1.0/100, R1=1000/0.7/100 |
+| feature_selection | exhaustive individual + combination tests | fixed 15-group bundle; importance block commented out | PAPER_ONLY | paper.xml Sec.3.3 + sampleCode var list |
+| rmse_formula | standard RMSE (text) | mean(sqrt(error^2)) stored as rmse | CONFLICT | paper.xml Sec.3 + sampleCode rmse line; P2 R2 recomputes sqrt(mean(err^2)) |
+| mae_formula | standard MAE (text) | same expression equals MAE (under rmse name) | CONFLICT | paper.xml Sec.3 + sampleCode rmse/newrmse lines |
+| seed | ensemble of 10 runs (seeds UNSPECIFIED) | random_state=1 fixed | UNSPECIFIED | paper.xml Sec.3 + sampleCode tts; P2 fixes seeds, no tuning |

@@ -1,0 +1,101 @@
+project: perdigao_attribution_v1.1
+plan_version: v1.1-2026-10-07
+master_seed: 2026091501
+tower: tse13
+target:
+  var: spd_100m_tse13
+  height_m: 100
+  horizon_primary: 1h
+  agg: right-aligned means, 5-min issue steps
+periods:
+  dev_start_utc: '2016-11-29T00:00:00Z'
+  dev_end_utc: '2017-03-10T00:00:00Z'
+  confirm_start_utc: '2017-03-10T00:00:00Z'
+  confirm_end_utc: '2017-06-17T00:00:00Z'
+  post_confirm_reserve_from: '2017-06-17T00:00:00Z'
+  post_confirm_use: none (future independent-confirmation candidate, sealed)
+split:
+  outer_block_days: 14
+  n_outer_folds: 8
+  purge_hours: 3
+  inner_validation_days: 14
+  spec: manifests/splits.parquet
+common_mask:
+  rule: complete-case over target+14 parents after ldiag/wake exclusions; identical
+    mask for all groups
+  confirm_rate: 0.852623
+primary:
+  model: random_forest
+  metric: RMSE=sqrt(mean(err^2)); aux MAE
+  contrasts:
+  - P_minus_R
+  - P_minus_S_median
+  - P_minus_G
+  horizon: 1h
+  bootstrap:
+    unit: day
+    block_days: 7
+    reps: 10000
+  bundle: core4x1
+secondary_bundles:
+  top6x2:
+    total: 56
+    added: 12
+  full24:
+    total: 68
+    added: 24
+group_definition: P=R+Xp (v1.1 fix; single-Xp fit banned)
+sham:
+  n: 100
+  master_seed: 2026091501
+  families:
+    formula_shuffle: 34
+    dimensional: 33
+    statistical: 33
+model_budget:
+  rf_grid: configs/model_budget.yaml
+  hpo_on: 'R only per fold; winners reused for P/S/G (sensitivity: equal-budget search)'
+  fit_cap_primary: 880
+  rule: same search count per group in sensitivity
+calibration_gate:
+  sensitivity_at_snr_0.5_1.0: 0.8
+  false_positive_max: 0.075
+  snr:
+  - 0.25
+  - 0.5
+  - 0.75
+  - 1.0
+  - 1.5
+  - 2.0
+  gate_snr:
+  - 0.5
+  - 1.0
+  missing:
+  - 0.0
+  - 0.1
+  - observed
+  reps: 100
+  dgp_primary:
+  - quad
+  - linear
+  - regime
+  hpo: R_only_6pt
+  rho: 0.5
+  sham_for_gate: 100_median
+sesoi:
+  definition: 1% of development-period bias-corrected ARIMA(2,0,1) 1h-ahead RMSE
+  dev_bca_rmse: 0.886165
+  value: 0.008862
+  bca_method: rolling 24h-window ARIMA(2,0,1) refits on dev longest-contiguous-run
+    hour-means (5-min issue steps, full 12/12 windows); 100 origins, min 250-stamp
+    history; 12-step forecasts; bias=mean residual; corrected RMSE=std(residuals);
+    non-finite or |fc|>50 m/s origins discarded
+  n_origins: 100
+  n_origins_skipped: 0
+stopping:
+- version!=1.2 -> INFEASIBLE
+- confirm common-mask<70pct -> INFEASIBLE (observed 0.8526)
+- calibration fail -> CALIBRATION_FAILED, no primary fit
+- leak audit fail -> AUDIT_FAILED
+status: FROZEN-P1
+frozen_at_utc: '2026-10-09T11:03:16+00:00'

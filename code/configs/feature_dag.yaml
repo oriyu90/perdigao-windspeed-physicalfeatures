@@ -1,0 +1,107 @@
+g: 9.81
+dz_m: 80.0
+features:
+  tke:
+    expr: 0.5*(var_u100+var_v100+var_w100)
+    parents:
+    - var_u100
+    - var_v100
+    - var_w100
+    unit: m2 s-2
+  sigma_u:
+    expr: sqrt(max(var_u100,0))
+    parents:
+    - var_u100
+    unit: m s-1
+  TI:
+    expr: sigma_u/U100
+    parents:
+    - sigma_u
+    - U100
+    unit: '1'
+  u_star20:
+    expr: (cov_uw20^2+cov_vw20^2)^(1/4)
+    parents:
+    - cov_uw20
+    - cov_vw20
+    unit: m s-1
+  u_star_norm:
+    expr: u_star20/U100
+    parents:
+    - u_star20
+    - U100
+    unit: '1'
+  dtheta_v_dz:
+    expr: (theta_v100-theta_v20)/80
+    parents:
+    - theta_v100
+    - theta_v20
+    unit: K m-1
+  N2:
+    expr: (g/theta_v_ref)*dtheta_v_dz
+    parents:
+    - theta_v_ref
+    - dtheta_v_dz
+    unit: s-2
+  dT_dz:
+    expr: (T100-T20)/80
+    parents:
+    - T100
+    - T20
+    unit: K m-1
+  du_dz:
+    expr: (u100-u20)/80
+    parents:
+    - u100
+    - u20
+    unit: s-1
+  dv_dz:
+    expr: (v100-v20)/80
+    parents:
+    - v100
+    - v20
+    unit: s-1
+  Ri_g:
+    expr: N2/(du_dz^2+dv_dz^2)
+    parents:
+    - N2
+    - du_dz
+    - dv_dz
+    unit: '1'
+  Ri_f:
+    expr: ((g/T_ref)*cov_wT100)/(cov_uw_ref*du_dz+cov_vw_ref*dv_dz)
+    parents:
+    - T_ref
+    - cov_wT100
+    - cov_uw_ref
+    - cov_vw_ref
+    - du_dz
+    - dv_dz
+    unit: '1'
+rules:
+  unavailable_without_parents: drop_without_substitution
+  main_clip: dev_0.5_99.5_percentile
+  denom_floor: abs_below_dev_p1pct_is_missing
+  reproduction_only_clip:
+    Ri_f:
+    - -5
+    - 5
+    Ri_g_max: 5
+  group_definition: P=R+Xp (v1.1 fix; single-Xp fit banned)
+tower: tse13
+availability:
+  tke: AVAILABLE
+  sigma_u: AVAILABLE
+  TI: AVAILABLE
+  u_star20: AVAILABLE
+  u_star_norm: AVAILABLE
+  dtheta_v_dz: AVAILABLE
+  N2: AVAILABLE
+  dT_dz: AVAILABLE
+  du_dz: AVAILABLE
+  dv_dz: AVAILABLE
+  Ri_g: AVAILABLE
+  Ri_f: AVAILABLE
+status: FROZEN-P1
+frozen_at_utc: '2026-10-09T11:03:16+00:00'
+group_definition: P=R+Xp (v1.1 fix; single-Xp fit banned)

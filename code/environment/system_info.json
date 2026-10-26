@@ -1,0 +1,15 @@
+{
+  "os": "Darwin 27.0.0 arm64",
+  "python": "3.12.11 (uv managed 3.12)",
+  "uv": "0.11.21",
+  "cpu_logical": 10,
+  "fetched_at_utc": "2026-10-07T15:31:13+00:00",
+  "versions": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scikit-learn": "1.9.1",
+    "xarray": "2026.9.0",
+    "netcdf4": "1.7.4"
+  },
+  "disk_avail_gi": 612.5
+}

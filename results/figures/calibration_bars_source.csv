@@ -1,0 +1,10 @@
+dform,cond,recalc_detect_0.5,recalc_detect_1.0,recalc_fp
+quad,m0,0.28,0.52,0.01
+quad,m10,0.41,0.71,0.01
+quad,mobs,0.37,0.73,0.0
+linear,m0,0.15,0.45,0.01
+linear,m10,0.15,0.45,0.01
+linear,mobs,0.19,0.4,0.0
+regime,m0,0.09,0.24,0.01
+regime,m10,0.1,0.11,0.01
+regime,mobs,0.1,0.15,0.0

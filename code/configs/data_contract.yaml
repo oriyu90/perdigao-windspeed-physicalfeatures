@@ -1,0 +1,202 @@
+project: perdigao_attribution_v1.1
+dataset_id: '536.011'
+doi: 10.26023/ZDMJ-D1TY-FG14
+version: '1.2'
+tower: tse13
+tower_decision: audit/tower_decision.json
+mapping:
+  U100: spd_100m_tse13
+  u100: u_100m_tse13
+  v100: v_100m_tse13
+  w100: w_100m_tse13
+  dir100: dir_100m_tse13
+  U20: spd_20m_tse13
+  u20: u_20m_tse13
+  v20: v_20m_tse13
+  T100: T_100m_tse13
+  T20: T_20m_tse13
+  tc100: tc_100m_tse13
+  tc20: tc_20m_tse13
+  var_u100: u_u__100m_tse13
+  var_v100: v_v__100m_tse13
+  var_w100: w_w__100m_tse13
+  cov_uw20: u_w__20m_tse13
+  cov_vw20: v_w__20m_tse13
+  cov_wT100: w_tc__100m_tse13
+  qc_ldiag20: ldiag_20m_tse13
+  qc_ldiag100: ldiag_100m_tse13
+  qc_counts100: counts_100m_tse13
+  qc_counts20: counts_20m_tse13
+var_meta:
+  U100:
+    var: spd_100m_tse13
+    dtype: float32
+    units: m/s
+    long_name: Horizontal wind speed, Gill
+    dims:
+    - time
+  u100:
+    var: u_100m_tse13
+    dtype: float32
+    units: m/s
+    long_name: Wind U component, Gill
+    dims:
+    - time
+  v100:
+    var: v_100m_tse13
+    dtype: float32
+    units: m/s
+    long_name: Wind V component, Gill
+    dims:
+    - time
+  w100:
+    var: w_100m_tse13
+    dtype: float32
+    units: m/s
+    long_name: Wind W component, Gill
+    dims:
+    - time
+  dir100:
+    var: dir_100m_tse13
+    dtype: float32
+    units: deg
+    long_name: Vector wind direction
+    dims:
+    - time
+  U20:
+    var: spd_20m_tse13
+    dtype: float32
+    units: m/s
+    long_name: Horizontal wind speed, Gill
+    dims:
+    - time
+  u20:
+    var: u_20m_tse13
+    dtype: float32
+    units: m/s
+    long_name: Wind U component, Gill
+    dims:
+    - time
+  v20:
+    var: v_20m_tse13
+    dtype: float32
+    units: m/s
+    long_name: Wind V component, Gill
+    dims:
+    - time
+  T100:
+    var: T_100m_tse13
+    dtype: float32
+    units: degC
+    long_name: Air Temperature, NCAR hygrothermometer
+    dims:
+    - time
+  T20:
+    var: T_20m_tse13
+    dtype: float32
+    units: degC
+    long_name: Air Temperature, NCAR hygrothermometer
+    dims:
+    - time
+  tc100:
+    var: tc_100m_tse13
+    dtype: float32
+    units: degC
+    long_name: Virtual air temperature, Gill
+    dims:
+    - time
+  tc20:
+    var: tc_20m_tse13
+    dtype: float32
+    units: degC
+    long_name: Virtual air temperature, Gill
+    dims:
+    - time
+  var_u100:
+    var: u_u__100m_tse13
+    dtype: float32
+    units: (m/s)^2
+    long_name: 2nd moment
+    dims:
+    - time
+  var_v100:
+    var: v_v__100m_tse13
+    dtype: float32
+    units: (m/s)^2
+    long_name: 2nd moment
+    dims:
+    - time
+  var_w100:
+    var: w_w__100m_tse13
+    dtype: float32
+    units: (m/s)^2
+    long_name: 2nd moment
+    dims:
+    - time
+  cov_uw20:
+    var: u_w__20m_tse13
+    dtype: float32
+    units: (m/s)^2
+    long_name: 2nd moment
+    dims:
+    - time
+  cov_vw20:
+    var: v_w__20m_tse13
+    dtype: float32
+    units: (m/s)^2
+    long_name: 2nd moment
+    dims:
+    - time
+  cov_wT100:
+    var: w_tc__100m_tse13
+    dtype: float32
+    units: m/s degC
+    long_name: 2nd moment
+    dims:
+    - time
+  qc_ldiag20:
+    var: ldiag_20m_tse13
+    dtype: float32
+    units: '?'
+    long_name: Gill logical diagnostic, 0=OK, 1=(status!=0)
+    dims:
+    - time
+  qc_ldiag100:
+    var: ldiag_100m_tse13
+    dtype: float32
+    units: '?'
+    long_name: Gill logical diagnostic, 0=OK, 1=(status!=0)
+    dims:
+    - time
+  qc_counts100:
+    var: counts_100m_tse13
+    dtype: int32
+    units: ' '
+    long_name: '?'
+    dims:
+    - time
+  qc_counts20:
+    var: counts_20m_tse13
+    dtype: int32
+    units: ' '
+    long_name: '?'
+    dims:
+    - time
+theta_v_convention: tc (Gill virtual temperature, degC) + 273.15; dtheta/dz adds Gamma_d=0.0098
+  K/m hydrostatic correction; no in-situ pressure at tower (P only at 2m elsewhere)
+  - documented approximation
+spd_identity_check:
+  file: isfs_qc_tiltcor_20170126.nc
+  max_abs_hypot_minus_spd: 0.2644028637399667
+  n_ok: 80
+qc_primary_exclusions:
+- ldiag_20m/tse13 != 0 or ldiag_100m/tse13 != 0 -> exclude stamp
+- dir_100m in [310,340] deg (paper-reported tower-shadow sector) -> exclude in primary;
+  include-all as sensitivity
+- no irgadiag var at tse13 -> rely on dataset QC spike-threshold removal (Data Report
+  p.1); documented
+eligibility_gate:
+  confirm_complete_case_min: 0.7
+  action_below_gate: INFEASIBLE_DATA
+frozen_at_utc: '2026-10-09T11:03:04+00:00'
+status: FROZEN-P1

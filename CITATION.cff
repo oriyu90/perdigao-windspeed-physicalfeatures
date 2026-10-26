@@ -1,0 +1,41 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software or its results, please cite this release, the source
+  study, and the dataset below.
+title: >-
+  Code release: reproduction / attribution study of physics-based input
+  features for wind-speed forecasting error (Perdigão tower tse13, v1.1)
+authors:
+  - name: "Perdigão attribution study v1.1 authors (anonymized for public release)"
+version: 1.1.0
+date-released: "2026-10-26"
+license: MIT
+abstract: >-
+  Frozen-protocol reproduction and attribution study re-running the claim of
+  Vassallo et al. (2021) that physics-based input features improve hourly wind
+  speed forecast error. The calibration gate failed in all 9 conditions
+  (max detection 0.73 < 0.80), so the primary statistics were not executed and
+  the confirm window stayed sealed (withheld). This release contains the
+  study code, calibration outputs, and final report; observation data are not
+  redistributed.
+references:
+  - type: article
+    title: >-
+      Utilizing physics-based input features within a machine learning model
+      to predict wind speed forecasting error
+    authors:
+      - family-names: Vassallo
+        given-names: D.
+      - family-names: Krishnamurthy
+        given-names: R.
+      - family-names: Fernando
+        given-names: H. J. S.
+    journal: "Wind Energy Science"
+    volume: 6
+    pages: "295-309"
+    year: 2021
+    doi: "10.5194/wes-6-295-2021"
+  - type: dataset
+    title: "Perdigão: Peña Corchado field campaign (NCAR EOL dataset 536.011, Version 1.2)"
+    doi: "10.26023/ZDMJ-D1TY-FG14"
+    note: "Obtain from NCAR EOL; see code/data/README.md. Last tower used: tse13."
